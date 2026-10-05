@@ -7,8 +7,9 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../models/chat_message.dart';
 
+/// Activity 4: serverless peer-to-peer chat using Google Nearby Connections.
 class MeshChatState extends ChangeNotifier {
-  static const String _serviceId = 'com.example.lab_activity4.meshchat';
+  static const String _serviceId = 'com.example.lab_activity_hub.meshchat';
   static const Strategy _strategy = Strategy.P2P_CLUSTER; // mesh: many peers
 
   String userName = 'User-${Random().nextInt(9000) + 1000}';
@@ -55,6 +56,12 @@ class MeshChatState extends ChangeNotifier {
     if (isRunning) return;
     if (name.trim().isNotEmpty) userName = name.trim();
     error = null;
+
+    if (kIsWeb) {
+      error = 'Local Mesh Chat works on Android phones only (not in the browser).';
+      notifyListeners();
+      return;
+    }
 
     if (!await _ensurePermissions()) {
       error ??= 'Permissions required (Location/Bluetooth/Nearby devices).';

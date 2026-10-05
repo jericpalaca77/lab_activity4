@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/chat_message.dart';
+import '../providers/app_state.dart';
 import '../providers/mesh_chat_state.dart';
 
 class LocalMeshChatScreen extends StatefulWidget {
@@ -20,7 +21,8 @@ class _LocalMeshChatScreenState extends State<LocalMeshChatScreen> {
   @override
   void initState() {
     super.initState();
-    _nameCtl.text = context.read<MeshChatState>().userName;
+    // Use the profile name from Settings as the default display name
+    _nameCtl.text = context.read<AppState>().userName;
   }
 
   @override
